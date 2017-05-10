@@ -38,16 +38,16 @@ let getEventsInStream = function(streamPosition, callback) {
         if (res.statusCode === 200) {
             let json = JSON.parse(body);
             let events = json.entries;
+            console.log(colors.red('Fetching Events...'));
             events.forEach(function(event) {
-                console.log('Printing Event');
-                console.log(colors.red('------------------------------'));
+                console.log(colors.red('----------------------------------------'));
                 console.log(event);
             });
 
             let nextPosition = json.next_stream_position;
             callback(nextPosition);
         } else {
-            console.log('getting the events failed...')
+            console.log('getting the events failed...');
         }
 
     };
@@ -75,14 +75,14 @@ let parseLogicForRealtime = function(json, longPollUrl, streamPosition) {
 
 let useListenerUrl = function(longPollUrl, streamPosition) {
 
-    let callback = function(err, res, body) {
+    let messageReader = function(err, res, body) {
         let json = JSON.parse(body);
-        parseLogicForRealtime(json, longPollUrl, streamPosition)
-    }
+        parseLogicForRealtime(json, longPollUrl, streamPosition);
+    };
 
     console.log('Listening...');
 
-    client.getListener({ developerToken: developerToken, url: longPollUrl, streamPosition: streamPosition, callback: callback });
+    client.getListener({ developerToken: developerToken, url: longPollUrl, streamPosition: streamPosition, callback: messageReader });
 
 };
 
