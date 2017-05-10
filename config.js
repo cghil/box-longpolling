@@ -1,3 +1,2 @@
-const developerToken = '5SzmIQfwdCXVHjxUmYpXuf8GLRvL2FWm';
-
+const developerToken = 'nFvbSgrv1oDlOMFpoEQEEpztMXCV7h5F';
 exports.developerToken = developerToken;

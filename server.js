@@ -1,15 +1,16 @@
-const request = require('request');
-const client = require('./client');
-const eventsController = require('./controllers/events');
-const developerToken = require('./config').developerToken;
+const realtimeController = require('./controllers/realtime');
+const eventController = require('./controllers/event');
 
 function gettingLongPollUrl(currentStream) {
 
-    let startListening = function(longPollUrl, currentStream) {
-        eventsController.useListenerUrl(longPollUrl, currentStream);
+    function startListening(longPollUrl, currentStream) {
+        // uses the realtime url with the stream position from current
+        realtimeController.useListenerUrl(longPollUrl, currentStream);
     };
-       
-    eventsController.getLongPollUrl(currentStream, startListening);
+
+    // gets the realtime url for listening to events
+    realtimeController.getLongPollUrl(currentStream, startListening);
 };
 
-eventsController.getCurrentStreamPosition(gettingLongPollUrl);
+// get stream position now, then get the realtime event url via callback function above
+eventController.getCurrentStreamPosition(gettingLongPollUrl);

@@ -3,7 +3,7 @@ const BASE = 'https://api.box.com/2.0/events';
 
 let headers = function(developerToken){
 	return {'Authorization': 'Bearer ' + developerToken};
-}
+};
 
 function getEventStreamNow(args){
 	let options = {
